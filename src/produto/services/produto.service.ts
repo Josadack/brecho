@@ -75,4 +75,21 @@ export class ProdutoService{
             throw new HttpException("Produto Deletado com Sucesso!🆗", HttpStatus.OK)
          return del
          }
+
+         //Métodos Especial
+         async produtoPorCategoria(produto: string): Promise<any>{
+            const results = await this.produtoRespository.createQueryBuilder('produto')
+            .innerJoin('produto.categoria', 'categoria')
+            .where('categoria.nome LIKE  :nome', {nome: `%${produto}%`})
+            .select(['categoria.nome As Categoria', 'produto.nome As Nome', 'produto.preco As Preço', 'produto.faixaEtaria As Faixa_Etaria' ])
+            .getRawMany(); 
+            if (!results || results.length === 0) {  
+                throw new HttpException('Produto não encontrado', HttpStatus.NOT_FOUND);  
+              }  
+            
+              return {  
+                  mensagem: "Tabela de Produto 📝:",  
+                  results:  results
+                }; 
+            }
     }

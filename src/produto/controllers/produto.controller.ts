@@ -45,4 +45,9 @@ export class ProdutoController{
         return this.produtoService.delete(id)
     }
 
+    @Get('/lista/:lista')
+    @HttpCode(HttpStatus.OK)
+    async getProd(@Param('lista') lista: string): Promise<any[]>{
+        return this.produtoService.produtoPorCategoria(lista)
+    }
 }

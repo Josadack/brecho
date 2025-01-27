@@ -27,10 +27,6 @@ export class Produto{
     @Column({ type: "decimal", precision: 10, scale: 2, transformer: new NumericTransformer() })
     preco: number;
 
-    @IsNotEmpty()
-    @IsPositive()
-    estoque: number;
-
     @Transform(({ value }: TransformFnParams) => value?.trim())
     @IsNotEmpty()
     @Column({length: 255, nullable:false})
